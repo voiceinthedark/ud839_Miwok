@@ -15,14 +15,42 @@
  */
 package com.example.android.miwok;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class NumbersActivity extends AppCompatActivity {
+
+    private ArrayList<String> words;
+    private static final String TAG = "mainactivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_numbers);
+
+        //Add and init the words array
+        words = new ArrayList<>(Arrays.asList("one",
+                "two", "three", "four", "five", "six",
+                "seven", "eight", "nine", "ten"));
+
+        //Get a reference to the linear layout in activity_numbers
+        LinearLayout rootView = (LinearLayout) findViewById(R.id.rootview);
+
+        if (rootView != null) {
+            int count = 0;
+            while(count < words.size()){
+                TextView textView = new TextView(this);
+                textView.setText(words.get(count));
+                rootView.addView(textView);
+                count++;
+            }
+        }
+
+
     }
 }
