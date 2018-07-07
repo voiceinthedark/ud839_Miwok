@@ -17,8 +17,8 @@ package com.example.android.miwok;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,18 +38,18 @@ public class NumbersActivity extends AppCompatActivity {
                 "two", "three", "four", "five", "six",
                 "seven", "eight", "nine", "ten"));
 
-        //Get a reference to the linear layout in activity_numbers
-        LinearLayout rootView = (LinearLayout) findViewById(R.id.rootview);
 
-        if (rootView != null) {
-            int count = 0;
-            while(count < words.size()){
-                TextView textView = new TextView(this);
-                textView.setText(words.get(count));
-                rootView.addView(textView);
-                count++;
-            }
-        }
+        //setup an ArrayAdapter
+        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1,
+                words);
+
+        //setup the ListView
+        ListView listView = (ListView) findViewById(R.id.list);
+
+        //attach the addapter to the listview
+        listView.setAdapter(itemsAdapter);
+
 
 
     }
