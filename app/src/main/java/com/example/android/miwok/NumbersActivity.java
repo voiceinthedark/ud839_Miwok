@@ -17,32 +17,37 @@ package com.example.android.miwok;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class NumbersActivity extends AppCompatActivity {
 
-    private ArrayList<String> words;
+    private ArrayList<Word> words;
     private static final String TAG = "mainactivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_numbers);
+        setContentView(R.layout.word_list);
 
         //Add and init the words array
-        words = new ArrayList<>(Arrays.asList("one",
-                "two", "three", "four", "five", "six",
-                "seven", "eight", "nine", "ten"));
+        words = new ArrayList<>();
+        words.add(new Word("one", "lutti"));
+        words.add(new Word("two", "otiiko"));
+        words.add(new Word("three", "tolookosu"));
+        words.add(new Word("four", "oyyisa"));
+        words.add(new Word("five", "massokka"));
+        words.add(new Word("six", "temmokka"));
+        words.add(new Word("seven", "kenekaku"));
+        words.add(new Word("eight", "kawinta"));
+        words.add(new Word("nine", "wo'e"));
+        words.add(new Word("ten", "na'aacha"));
 
 
         //setup an ArrayAdapter
-        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1,
-                words);
+        WordAdapter itemsAdapter =
+                new WordAdapter(this, R.layout.list_item, words);
 
         //setup the ListView
         ListView listView = (ListView) findViewById(R.id.list);
