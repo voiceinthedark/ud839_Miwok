@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,11 +21,13 @@ import java.util.List;
 public class WordAdapter extends ArrayAdapter<Word> {
 
     private List<Word> mWords;
-    private int mResourceID;
-    public WordAdapter(Context context, int resourceId, List<Word> words){
+    private int mLayoutResourceID;
+    private int mColorResourceID;
+    public WordAdapter(Context context, int resourceId, List<Word> words, int colorResourceId){
         super(context, resourceId, words);
         mWords = words;
-        mResourceID = resourceId;
+        mLayoutResourceID = resourceId;
+        mColorResourceID = colorResourceId;
     }
 
     /**
@@ -44,7 +47,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         if (view == null) {
             view = LayoutInflater.from(getContext())
-                    .inflate(mResourceID, parent, false);
+                    .inflate(mLayoutResourceID, parent, false);
         }
 
         //Instantiate our referenced views; 2 TextViews and an ImageView
@@ -52,15 +55,30 @@ public class WordAdapter extends ArrayAdapter<Word> {
         TextView mDefaultWordTextView = (TextView) view.findViewById(R.id.word_english);
         ImageView mWordImageView = (ImageView) view.findViewById(R.id.word_image_view);
 
+        //Get a reference to the LinearLayout that holds the two textviews
+        LinearLayout wordLinearLayout = (LinearLayout) view.findViewById(R.id.word_list_view);
+
+        //set the background color according to the colorresource id
+        wordLinearLayout.setBackgroundResource(mColorResourceID);
+
         //Get the Word object at the current position; getItem is a member method of ArrayAdapter
         Word w = getItem(position);
         //Set Text of our text views to display the Word state variables
         mMiwokWordTextView.setText(w.getWordMiwoki());
         mDefaultWordTextView.setText(w.getWordDefault());
         //set the image resource to point to our drawable resource id associated with the word.
-        mWordImageView.setImageResource(w.getImageResourceId());
+        if(w.hasImage()) {
+            //if the Word has an image set the image
+            mWordImageView.setImageResource(w.getImageResourceId());
 
-
+            //and make sure it is visible in case an older view was recycled
+            mWordImageView.setVisibility(View.VISIBLE);
+        }
+        else{
+            //Set the image visibility to GONE; which indicates that it is INVISIBLE and holds
+            //no space
+            mWordImageView.setVisibility(View.GONE);
+        }
 
         return view;
     }

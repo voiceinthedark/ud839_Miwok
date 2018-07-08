@@ -4,6 +4,9 @@ package com.example.android.miwok;
  * class {@link Word} that contains a word in Miwok and its default translation
  */
 public class Word {
+
+    private static final int NO_IMAGE = -1;
+
     //holder for the word in Miwoki
     private String mWordMiwoki;
 
@@ -32,13 +35,19 @@ public class Word {
         return mImageResourceId;
     }
 
+    //a boolean flag to check whether
+
+    public boolean hasImage() {
+        return mImageResourceId > 0;
+    }
+
     /**
      * public constructor; sets a Miwok word along with its translation
      * @param wordDefault the default translation
      * @param wordMiwoki the Miwok word
      */
     public Word(String wordDefault, String wordMiwoki){
-        this(wordDefault, wordMiwoki, 0);
+        this(wordDefault, wordMiwoki, NO_IMAGE);
     }
 
     public Word(String wordDefault, String wordMiwoki, int imageResourceId){
