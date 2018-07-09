@@ -41,19 +41,26 @@ public class Word {
         return mImageResourceId > 0;
     }
 
+    private int mSoundResourceId;
+
+    public int getSoundResourceId() {
+        return mSoundResourceId;
+    }
+
     /**
      * public constructor; sets a Miwok word along with its translation
      * @param wordDefault the default translation
      * @param wordMiwoki the Miwok word
      */
-    public Word(String wordDefault, String wordMiwoki){
-        this(wordDefault, wordMiwoki, NO_IMAGE);
+    public Word(String wordDefault, String wordMiwoki, int soundResourceId){
+        this(wordDefault, wordMiwoki, NO_IMAGE, soundResourceId);
     }
 
-    public Word(String wordDefault, String wordMiwoki, int imageResourceId){
+    public Word(String wordDefault, String wordMiwoki, int imageResourceId, int soundResourceId){
         this.mWordDefault = wordDefault;
         this.mWordMiwoki = wordMiwoki;
         this.mImageResourceId = imageResourceId;
+        this.mSoundResourceId = soundResourceId;
     }
 
 

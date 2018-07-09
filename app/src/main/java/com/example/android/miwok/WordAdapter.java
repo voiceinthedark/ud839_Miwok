@@ -2,6 +2,7 @@ package com.example.android.miwok;
 
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -20,9 +21,14 @@ import java.util.List;
  */
 public class WordAdapter extends ArrayAdapter<Word> {
 
+    private static final String TAG = "wordadapter";
+
     private List<Word> mWords;
     private int mLayoutResourceID;
     private int mColorResourceID;
+
+    private MediaPlayer mMediaPlayer;
+
     public WordAdapter(Context context, int resourceId, List<Word> words, int colorResourceId){
         super(context, resourceId, words);
         mWords = words;
@@ -62,7 +68,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
         wordLinearLayout.setBackgroundResource(mColorResourceID);
 
         //Get the Word object at the current position; getItem is a member method of ArrayAdapter
-        Word w = getItem(position);
+        final Word w = getItem(position);
         //Set Text of our text views to display the Word state variables
         mMiwokWordTextView.setText(w.getWordMiwoki());
         mDefaultWordTextView.setText(w.getWordDefault());
@@ -79,6 +85,28 @@ public class WordAdapter extends ArrayAdapter<Word> {
             //no space
             mWordImageView.setVisibility(View.GONE);
         }
+
+
+
+
+        /**
+         * Attach a listener on the entire list_item_view
+         */
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * Associates {@link MediaPlayer} object with the {@link Word} sound
+                 */
+                int soundResource = w.getSoundResourceId();
+                String soundName = getContext().getResources().getResourceName(soundResource);
+                //Mediaplayer is associated with the word once the user click the view
+                mMediaPlayer = MediaPlayer.create(getContext(), soundResource);
+                //Log.i(TAG, "filename: " + soundName);
+                //if the user presses the view play sound
+                mMediaPlayer.start();
+            }
+        });
 
         return view;
     }
