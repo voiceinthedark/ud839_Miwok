@@ -63,5 +63,13 @@ public class Word {
         this.mSoundResourceId = soundResourceId;
     }
 
-
+    @Override
+    public String toString() {
+        return "Word{" +
+                "mWordMiwoki='" + mWordMiwoki + '\'' +
+                ", mWordDefault='" + mWordDefault + '\'' +
+                ", mImageResourceId=" + mImageResourceId +
+                ", mSoundResourceId=" + mSoundResourceId +
+                '}';
+    }
 }

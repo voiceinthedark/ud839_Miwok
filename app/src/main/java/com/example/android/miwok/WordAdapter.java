@@ -37,7 +37,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
     }
 
     /**
-     * Overrid getView in our word adapter to display our views in our custom layout
+     * Override getView in our word adapter to display our views in our custom layout
      * @param position position of the index of the view currently in the list
      * @param convertView the view used by the {@link android.widget.ListView} to display our custom
      *                    layout view.
@@ -105,9 +105,34 @@ public class WordAdapter extends ArrayAdapter<Word> {
                 //Log.i(TAG, "filename: " + soundName);
                 //if the user presses the view play sound
                 mMediaPlayer.start();
+
+                //Clean up resources
+                mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        releaseMediaPlayer();
+                    }
+                });
             }
         });
 
         return view;
+    }
+
+    /**
+     * Clean up the media player by releasing its resources.
+     */
+    private void releaseMediaPlayer() {
+        // If the media player is not null, then it may be currently playing a sound.
+        if (mMediaPlayer != null) {
+            // Regardless of the current state of the media player, release its resources
+            // because we no longer need it.
+            mMediaPlayer.release();
+
+            // Set the media player back to null. For our code, we've decided that
+            // setting the media player to null is an easy way to tell that the media player
+            // is not configured to play an audio file at the moment.
+            mMediaPlayer = null;
+        }
     }
 }
