@@ -116,27 +116,27 @@ public class FamilyActivity extends AppCompatActivity {
             //setup audio manager
             mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             //request Focus
-            mAudioManager.requestAudioFocus(mAudioFocusChangeListener,
+            int result = mAudioManager.requestAudioFocus(mAudioFocusChangeListener,
                     AudioManager.STREAM_MUSIC,
                     AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
-            Word word = words.get(position);
+            if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                Word word = words.get(position);
 
-            //Mediaplayer is associated with the word once the user click the view
-            mMediaPlayer = MediaPlayer.create(FamilyActivity.this, word.getSoundResourceId());
+                //Mediaplayer is associated with the word once the user click the view
+                mMediaPlayer = MediaPlayer.create(FamilyActivity.this, word.getSoundResourceId());
 
-            //if the user presses the view play sound
-            mMediaPlayer.start();
+                //if the user presses the view play sound
+                mMediaPlayer.start();
 
-            //Clean up resources
-            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    releaseMediaPlayer();
-                    //release the audio focus
-                    mAudioManager.abandonAudioFocus(mAudioFocusChangeListener);
-                }
-            });
+                //Clean up resources
+                mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        releaseMediaPlayer();
+                    }
+                });
+            }
         }
     };
 
@@ -154,6 +154,8 @@ public class FamilyActivity extends AppCompatActivity {
             // setting the media player to null is an easy way to tell that the media player
             // is not configured to play an audio file at the moment.
             mMediaPlayer = null;
+            //release the audio focus
+            mAudioManager.abandonAudioFocus(mAudioFocusChangeListener);
         }
     }
 
