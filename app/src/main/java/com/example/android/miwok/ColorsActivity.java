@@ -43,6 +43,8 @@ public class ColorsActivity extends AppCompatActivity {
                         //if focus is lost for short period of time, pause playing
                         if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
                             mMediaPlayer.pause();
+                            //return the pointer to the begining of the audio
+                            mMediaPlayer.seekTo(0);
                         }
                         //if focus is lost permanently then stop playing the sound
                         else if(focusChange == AudioManager.AUDIOFOCUS_LOSS){
@@ -53,6 +55,8 @@ public class ColorsActivity extends AppCompatActivity {
                         //the volume then we should pause the sound
                         else if(focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK){
                             mMediaPlayer.pause();
+                            //return the pointer to the begining of the audio
+                            mMediaPlayer.seekTo(0);
                         }
                         //if we gain audio focus after losing it for short duration, then resume
                         //playing the audio
