@@ -9,7 +9,8 @@ public class WordsFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
 
     private Context mContext;
     /**
-     * Default constructor accepts a fragment manager
+     * Default constructor accepts a {@link Context} object and {@link FragmentManager}.
+     * @param context the application context used to get reference to context method getString()
      * @param fragmentManager
      */
     WordsFragmentStatePagerAdapter(Context context, FragmentManager fragmentManager){
@@ -17,6 +18,11 @@ public class WordsFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
         mContext = context;
     }
 
+    /**
+     * Get the fragment at certain position
+     * @param position
+     * @return a fragment to the ViewPager
+     */
     @Override
     public Fragment getItem(int position) {
         switch (position){
@@ -38,6 +44,12 @@ public class WordsFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
         return 4;
     }
 
+    /**
+     * Get the title of the Fragment at position i
+     * Useful in order to setup Tabs title
+     * @param position
+     * @return
+     */
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position){

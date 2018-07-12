@@ -16,6 +16,7 @@
 package com.example.android.miwok;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
@@ -42,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
         //set the viewpager to accept the custom FragmentStatePagerAdapter
         viewPager.setAdapter(new WordsFragmentStatePagerAdapter(getApplicationContext(), fm));
+
+        /**
+         * Add TabsLayout, get reference to the sliding tabs in activity_main.xml
+         */
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        //Attach the tabLayout to the ViewPager, which will call the getPageTitle()
+        tabLayout.setupWithViewPager(viewPager);
 
 
 
