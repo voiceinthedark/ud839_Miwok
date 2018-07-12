@@ -27,8 +27,6 @@ public class NumbersActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, new NumbersFragment())
                 .commit();
-
-
     }
 
 
